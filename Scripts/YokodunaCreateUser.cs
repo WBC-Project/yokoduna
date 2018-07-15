@@ -7,8 +7,8 @@ using UnityEngine;
 namespace Yokoduna {
     // "CreateUser" of rest client's invoke system
     // false => error , true => success
-    public class _createUser {
-        public _createUser(User user, Config conf, Subject<bool> unit, bool throwHandle = false) {
+    public class YokodunaCreateUser {
+        public YokodunaCreateUser(User user, Config conf, Subject<bool> unit, bool throwHandle = false) {
             if (_checkCreatedUser()) {
                 Debug.LogError("[Yokoduna Error] Creating User Registed! Can not duplication user infomations!");
                 return;
