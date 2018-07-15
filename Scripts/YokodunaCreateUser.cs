@@ -9,7 +9,7 @@ namespace Yokoduna {
     // false => error , true => success
     public class YokodunaCreateUser {
         public YokodunaCreateUser(User user, Config conf, Subject<bool> unit, bool throwHandle = false) {
-            if (_checkCreatedUser()) {
+            if (checkCreatedUser()) {
                 Debug.LogError("[Yokoduna Error] Creating User Registed! Can not duplication user infomations!");
                 return;
             }
@@ -29,6 +29,7 @@ namespace Yokoduna {
                     if (!throwHandle) Debug.LogError(String.Format("[Yokoduna Error] Create User: {0}",info.error));
                     else Debug.LogWarning(String.Format("[Yokoduna Error] Create User: {0}",info.error));
                     unit.OnNext(false);
+                    unit.OnCompleted();
                     return;
                 }
                 unit.OnNext(true);
@@ -36,7 +37,7 @@ namespace Yokoduna {
         }
 
         // Check 2 Registed cd
-        private bool _checkCreatedUser () {
+        private bool checkCreatedUser () {
             string userID = PlayerPrefs.GetString("YokodunaPlayerRegistedID");
             if (userID != "") {
                 return true;
