@@ -27,5 +27,14 @@ namespace Yokoduna {
                 }
             });
         }
+
+        // Check 2 Registed cd
+        private bool _checkCreatedUser () {
+            string userID = PlayerPrefs.GetString("YokodunaPlayerRegistedID");
+            if (userID != "") {
+                return false;
+            }
+            return true;
+        }
     }
 }
