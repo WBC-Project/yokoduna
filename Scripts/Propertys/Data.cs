@@ -39,4 +39,26 @@ namespace Yokoduna {
 			this.error = error;
 		}
 	}
+
+	/// <summary>
+	/// APIGetData
+	/// </summary>
+	[System.Serializable] public class APIGetData {
+		public string status {get; private set;}
+		public APIData data {get; private set;}
+		public string timestamp {get; private set;}
+		public string error {get; private set;}
+	}
+
+	/// <summary>
+	/// Data Scheme
+	/// </summary>
+	[System.Serializable] public class APIData {
+		public string id {get; set;}
+		public string key {get; set;}
+		public string value {get; set;}
+		public string token {get; set;}
+		public string created_at {get; set;}
+		public string updated_at {get; set;}
+	}
 }
