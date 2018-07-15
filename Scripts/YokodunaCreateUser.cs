@@ -25,7 +25,7 @@ namespace Yokoduna {
             Client cli = new Client(uri, sj);
             sj.Subscribe(_jsn => {
                 APICreateUser info = JsonUtility.FromJson<APICreateUser>(_jsn);
-                if ( info.isError ) {
+                if ( info.error != "" ) {
                     if (!throwHandle) Debug.LogError(String.Format("[Yokoduna Error] Create User: {0}",info.error));
                     else Debug.LogWarning(String.Format("[Yokoduna Error] Create User: {0}",info.error));
                     unit.OnNext(false);

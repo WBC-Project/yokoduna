@@ -11,9 +11,9 @@ namespace Yokoduna {
 	/// <typeparam name="password">登録されたパスワード</typeparam>
 	/// </summary>
 	public class User {
-		public string name {get; private set;}
-		public string mail {get; private set;}
-		public string password {get; private set;}
+		public string name ;
+		public string mail ;
+		public string password ;
 		public User (string name, string mail, string password) {
 			this.name = name;
 			this.mail = mail;
@@ -25,59 +25,31 @@ namespace Yokoduna {
 	/// Create User for API Cli Info
 	/// </summary>
 	public class APICreateUser {
-		public string status {get; private set;}
-		public string userID {get; private set;}
-		public string timestamp {get; private set;}
-		public string error {get; private set;}
-		public APICreateUser (string status, string userID, string timestamp, string error) {
-			this.status = status;
-			this.userID = userID;
-			this.timestamp = timestamp;
-			this.error = error;
-		}
-		public bool isError {
-			get {
-				if (error != "") {
-					return true;
-				}
-				return false;
-			}
-		}
+		public string status;
+		public string userID;
+		public string timestamp;
+		public string error;
 	}
 
 	/// <summary>
 	/// Details for API Cli Info
 	/// </summary>
 	public class APIUserDetail {
-		public string status {get; private set;}
-		public string userID {get; private set;}
-		public string userName {get; private set;}
-		public string mailAddress {get; private set;}
-		public string timestamp {get; private set;}
-		public string error {get; private set;}
-		public APIUserDetail (string status, string userID, string userName, string mailAddress, string timestamp, string error) {
-			this.status = status;
-			this.userID = userID;
-			this.userName = userName;
-			this.mailAddress = mailAddress;
-			this.timestamp = timestamp;
-			this.error = error;
-		}
+		public string status;
+		public string userID;
+		public string userName;
+		public string mailAddress;
+		public string timestamp;
+		public string error;
 	}
 
 	/// <summary>
 	/// Login for API Cli Info
 	/// </summary>
 	public class APILoginUser {
-		public string status {get; private set;}
-		public string userID {get; private set;}
-		public string timestamp {get; private set;}
-		public string error {get; private set;}
-		public APILoginUser (string status, string userID, string timestamp, string error) {
-			this.status = status;
-			this.userID = userID;
-			this.timestamp = timestamp;
-			this.error = error;
-		}
+		public string status;
+		public string userID;
+		public string timestamp;
+		public string error;
 	}
 }
