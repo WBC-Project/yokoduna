@@ -24,10 +24,19 @@ namespace Yokoduna {
 			this.key = key;
 			this.value = JsonUtility.ToJson(instance);
 		}
-		
-		public Subject<bool> Execute(Config configure) {
-			Subject<bool> subject = new Subject<bool>();
-			return subject;
-		}	
+	}
+
+	/// <summary>
+	/// APISetData
+	/// </summary>
+	[System.Serializable] public class APISetData {
+		public string status{get; private set;}
+		public string timestamp{get; private set;}
+		public string error{get; private set;}
+		public APISetData(string status, string timestamp, string error) {
+			this.status = status;
+			this.timestamp = timestamp;
+			this.error = error;
+		}
 	}
 }
