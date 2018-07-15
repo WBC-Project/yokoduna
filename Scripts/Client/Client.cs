@@ -5,7 +5,14 @@ using UnityEngine;
 using UniRx;
 
 namespace Yokoduna {
-    [Serializable] public class Client {
-        
+    /// <summary>
+    /// REST API Client System
+    /// </summary>
+    public class Client {
+        public Client (string url, Subject<string> subject) {
+            var getter = ObservableWWW.Get(url).Subscribe(response => {
+                subject.OnNext(response);
+            });
+        }
     }
 }
