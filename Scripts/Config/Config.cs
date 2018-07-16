@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace  Yokoduna {
+namespace WBCProject {
 	/// <summary>
 	/// API Configration
 	/// </summary>

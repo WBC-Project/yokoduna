@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-namespace Yokoduna {
+namespace WBCProject {
 
     public class YokodunaLogin {
         public User user = null;

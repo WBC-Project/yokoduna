@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-namespace Yokoduna {
+namespace WBCProject {
     // "CreateUser" of rest client's invoke system
     // false => error , true => success
     public class YokodunaCreateUser {

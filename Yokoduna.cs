@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-namespace Yokoduna {
+namespace WBCProject {
     public class Yokoduna : MonoBehaviour {
         [SerializeField] private Config setting;
-        [SerializeField] private string userName;
-        [SerializeField] private string mail;
-        [SerializeField] private string pass;
         public string user_id;
 
         /// <summary>
@@ -19,95 +16,6 @@ namespace Yokoduna {
                 Debug.LogError("[Yokoduna]Settingファイルが指定されていません。");
                 return;
             }
-        }
-
-        /// <summary>
-        /// User nameなどの動作に必要な情報がキチンと格納されているかチェックします
-        /// </summary>
-        public void Init() {
-            if (userName == "") {
-                Debug.LogError("[Yokoudna]User Nameが設定されていません");
-                return;
-            }
-            if (mail == ""){
-                Debug.LogError("[Yokoudna]メールアドレスが設定されていません");
-                return;
-            }
-            if (pass == "") {
-                Debug.LogError("[Yokoudna]パスワードが設定されていません");
-                return;
-            }
-        }
-
-        void Start() {
-            Init();
-            LoginSample();
-            StartCoroutine(UpdateData());
-        }
-
-        private IEnumerator UpdateData() {
-            while (user_id == "") {
-                yield return new WaitForSeconds(0.1f);
-            }
-            SetDataSample();
-            yield return new WaitForSeconds(1.0f);
-            GetDataSample();
-            // while(true) {
-            //     yield return new WaitForSeconds(0.5f);
-            // }
-        }
-
-        /// <summary>
-        /// Create User Sample
-        /// </summary>
-        private void CreateUserSample() {
-            var sequence = CreateUser(userName, mail, pass);
-            sequence.Subscribe( isSuccess =>{
-                if (isSuccess == true) {
-                    Debug.Log("ユーザーの作成が終了しました");
-                } else {
-                    Debug.Log("既に登録されているユーザー");
-                }
-            });
-        }
-
-        /// <summary>
-        /// Create User Sample
-        /// </summary>
-        private void LoginSample() {
-            var sequence = Login(mail, pass);
-            sequence.Subscribe( isSuccess =>{
-                if (isSuccess == true) {
-                    Debug.Log("対象ユーザーのログインに成功しました");
-                } else {
-                    Debug.Log("対象ユーザーのログインに失敗しました");
-                }
-            });
-        }
-
-        private void SetDataSample() {
-            var sequence = SetData(this.user_id, "test_key", "test_value", "test");
-            sequence.Subscribe( isSuccess => {
-                if (isSuccess == true) {
-                    Debug.Log("データの送信に成功しました");
-                } else {
-                    Debug.Log("データの送信に失敗しました");
-                }
-            });
-        }
-
-        private void GetDataSample() {
-            var sequence = GetData(this.user_id, "test_key", "test");
-            sequence.Subscribe( isSuccess => {
-                if (isSuccess != null) {
-                    Debug.Log("データの受信に成功しました");
-                    foreach (APIData data in isSuccess) {
-                        Debug.Log(string.Format("key:{0}, value:{1}", data.key, data.value));
-                    }
-                } else {
-                    Debug.Log("データの受信に失敗しました");
-                }
-            });
         }
 
         /// <summary>

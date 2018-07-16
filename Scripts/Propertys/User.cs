@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Yokoduna {
+namespace WBCProject {
 	/// <summary>
 	/// User Property Class
 	/// "Impedance miss match" for resolution

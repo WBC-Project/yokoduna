@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
 
-namespace Yokoduna {
+namespace WBCProject {
 
     public class YokodunaSetData {
         public YokodunaSetData(string user_id, string key, string value, string groupName, Config conf, Subject<bool> unit, bool throwHandle = false) {

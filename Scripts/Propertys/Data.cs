@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UniRx;
 
-namespace Yokoduna {
+namespace WBCProject {
 	///<summary>
 	/// Data<T>(string, object)
 	/// key value store (KVS) をモデルとしたDataプロパティです。
