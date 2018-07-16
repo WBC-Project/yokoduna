@@ -8,6 +8,6 @@ namespace WBCProject {
 	public class Config : ScriptableObject {
 		public string apikey;
 		public string productkey;
-		[HideInInspector] public string baseURL = "http://localhost/yokoduna/public/";
+		[HideInInspector] public string baseURL = "https://yokoduna.axluse.net/";
 	}
 }
