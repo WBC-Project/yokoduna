@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36df12bb094e74c0ba3e0a4aaeddae53, type: 3}
   m_Name: SampleConfig
   m_EditorClassIdentifier: 
-  apikey: ENl5-9ExqDC-Xj6DpW
-  productkey: 15-R-8haLlN-nNn-23
+  apikey: bJRY-yvlAq-DNUpN
+  productkey: 3brA-vqTxc-ytV3h
   baseURL: http://localhost/yokoduna/public/

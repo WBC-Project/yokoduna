@@ -8,7 +8,7 @@ namespace Yokoduna {
     // "CreateUser" of rest client's invoke system
     // false => error , true => success
     public class YokodunaCreateUser {
-        public YokodunaCreateUser(User user, Config conf, Subject<bool> unit, bool throwHandle = false) {
+        public YokodunaCreateUser(User user, Config conf, Subject<string> unit, bool throwHandle = false) {
             if (checkCreatedUser()) {
                 Debug.LogError("[Yokoduna Error] Creating User Registed! Can not duplication user infomations!");
                 return;
@@ -28,12 +28,14 @@ namespace Yokoduna {
                 if ( info.error != "" ) {
                     if (!throwHandle) Debug.LogError(String.Format("[Yokoduna Error] Create User: {0}",info.error));
                     else Debug.LogWarning(String.Format("[Yokoduna Error] Create User: {0}",info.error));
-                    unit.OnNext(false);
+                    unit.OnNext("");
                     unit.OnCompleted();
                     return;
                 }
-                unit.OnNext(true);
+                unit.OnNext(info.userID);
+                unit.OnCompleted();
             });
+            
         }
 
         // Check 2 Registed cd
