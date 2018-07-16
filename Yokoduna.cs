@@ -50,6 +50,8 @@ namespace Yokoduna {
                 yield return new WaitForSeconds(0.1f);
             }
             SetDataSample();
+            yield return new WaitForSeconds(1.0f);
+            GetDataSample();
             // while(true) {
             //     yield return new WaitForSeconds(0.5f);
             // }
@@ -94,13 +96,27 @@ namespace Yokoduna {
             });
         }
 
+        private void GetDataSample() {
+            var sequence = GetData(this.user_id, "test_key", "test");
+            sequence.Subscribe( isSuccess => {
+                if (isSuccess != null) {
+                    Debug.Log("データの受信に成功しました");
+                    foreach (APIData data in isSuccess) {
+                        Debug.Log(string.Format("key:{0}, value:{1}", data.key, data.value));
+                    }
+                } else {
+                    Debug.Log("データの受信に失敗しました");
+                }
+            });
+        }
+
         /// <summary>
         /// ユーザー新規登録コントローラー
         /// </summary>
         /// <param name="userName">ユーザー名</param>
         /// <param name="mail">メールアドレス</param>
         /// <param name="password">ログインパスワード</param>
-        /// <returns></returns>
+        /// <returns>非同期boolean </returns>
         public Subject<bool> CreateUser(string userName, string mail, string password) {
             Subject<bool> retPass = new Subject<bool>();
             Subject<string> cliPass = new Subject<string>();
@@ -123,7 +139,7 @@ namespace Yokoduna {
         /// </summary>
         /// <param name="mail">メールアドレス</param>
         /// <param name="password">パスワード</param>
-        /// <returns></returns>
+        /// <returns>非同期boolean</returns>
         public Subject<bool> Login(string mail, string password) {
             Subject<bool> retPass = new Subject<bool>();
             Subject<string> cliPass = new Subject<string>();
@@ -149,7 +165,7 @@ namespace Yokoduna {
         /// <param name="key">データにアクセスする変数名のようなもの</param>
         /// <param name="value">変数の中身のデータのようなもの</param>
         /// <param name="groupName">データグループ</param>
-        /// <returns></returns>
+        /// <returns>非同期boolean</returns>
         public Subject<bool> SetData(string user_id, string key, string value, string groupName) {
             Subject<bool> retPass = new Subject<bool>();
             Subject<bool> cliPass = new Subject<bool>();
@@ -164,13 +180,27 @@ namespace Yokoduna {
             });
             return retPass;
         }
-    }
 
-    public enum InitSequence {
-        Init,
-        WaitCreateUser,
-        SuccessCreateUser,
-        AllSuccess,
-        Error
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user_id"></param>
+        /// <param name="key"></param>
+        /// <param name="groupName"></param>
+        /// <returns>非同期データプロパティクラス</returns>
+        public Subject<APIData[]> GetData (string user_id, string key, string groupName) {
+            Subject<APIData[]> pass = new Subject<APIData[]>();
+            Subject<APIData[]> ret = new Subject<APIData[]>();
+            var getter = new YokodunaGetData(user_id, key, groupName, setting, pass, true);
+            pass.Subscribe(_unit => {
+                if (_unit == null) {
+                    ret.OnNext(null);
+                } else {
+                    ret.OnNext(_unit);
+                }
+                ret.OnCompleted();
+            });
+            return ret;
+        }
     }
 }

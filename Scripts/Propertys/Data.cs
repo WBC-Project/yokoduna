@@ -40,7 +40,7 @@ namespace Yokoduna {
 	/// </summary>
 	[System.Serializable] public class APIGetData {
 		public string status;
-		public APIData data;
+		public APIData[] datas;
 		public string timestamp;
 		public string error;
 	}
