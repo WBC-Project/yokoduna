@@ -11,7 +11,10 @@ namespace Yokoduna {
         [SerializeField] private string pass;
         public string user_id;
 
-        private void Start() {
+        /// <summary>
+        /// Settingファイルの参照が正しいかチェックをします
+        /// </summary>
+        private void Awake() {
             if (setting == null ){
                 Debug.LogError("[Yokoduna]Settingファイルが指定されていません。");
                 return;
@@ -19,10 +22,43 @@ namespace Yokoduna {
         }
 
         /// <summary>
+        /// User nameなどの動作に必要な情報がキチンと格納されているかチェックします
+        /// </summary>
+        public void Init() {
+            if (userName == "") {
+                Debug.LogError("[Yokoudna]User Nameが設定されていません");
+                return;
+            }
+            if (mail == ""){
+                Debug.LogError("[Yokoudna]メールアドレスが設定されていません");
+                return;
+            }
+            if (pass == "") {
+                Debug.LogError("[Yokoudna]パスワードが設定されていません");
+                return;
+            }
+        }
+
+        void Start() {
+            Init();
+            LoginSample();
+            StartCoroutine(UpdateData());
+        }
+
+        private IEnumerator UpdateData() {
+            while (user_id == "") {
+                yield return new WaitForSeconds(0.1f);
+            }
+            SetDataSample();
+            // while(true) {
+            //     yield return new WaitForSeconds(0.5f);
+            // }
+        }
+
+        /// <summary>
         /// Create User Sample
         /// </summary>
-        private void StartCreateUser() {
-            
+        private void CreateUserSample() {
             var sequence = CreateUser(userName, mail, pass);
             sequence.Subscribe( isSuccess =>{
                 if (isSuccess == true) {
@@ -36,17 +72,24 @@ namespace Yokoduna {
         /// <summary>
         /// Create User Sample
         /// </summary>
-        private void StartLogin() {
-            if (setting == null ){
-                Debug.LogError("[Yokoduna]Settingファイルが指定されていません。");
-                return;
-            }
+        private void LoginSample() {
             var sequence = Login(mail, pass);
             sequence.Subscribe( isSuccess =>{
                 if (isSuccess == true) {
                     Debug.Log("対象ユーザーのログインに成功しました");
                 } else {
                     Debug.Log("対象ユーザーのログインに失敗しました");
+                }
+            });
+        }
+
+        private void SetDataSample() {
+            var sequence = SetData(this.user_id, "test_key", "test_value", "test");
+            sequence.Subscribe( isSuccess => {
+                if (isSuccess == true) {
+                    Debug.Log("データの送信に成功しました");
+                } else {
+                    Debug.Log("データの送信に失敗しました");
                 }
             });
         }
@@ -98,13 +141,21 @@ namespace Yokoduna {
             return retPass;
         }
 
-        public Subject<bool> SetData(string mail, string password) {
+        /// <summary>
+        /// keyとvalueで対になったデータをサーバーにプッシュします
+        /// これらのデータには、グループを設定できます
+        /// データの保有はサーバー上でユーザーごとに保有することになります
+        /// </summary>
+        /// <param name="key">データにアクセスする変数名のようなもの</param>
+        /// <param name="value">変数の中身のデータのようなもの</param>
+        /// <param name="groupName">データグループ</param>
+        /// <returns></returns>
+        public Subject<bool> SetData(string user_id, string key, string value, string groupName) {
             Subject<bool> retPass = new Subject<bool>();
-            Subject<string> cliPass = new Subject<string>();
-            User user = new User("", mail, password);
-            var getter = new YokodunaLogin(user,setting, cliPass);
+            Subject<bool> cliPass = new Subject<bool>();
+            var getter = new YokodunaSetData(user_id, key, value, groupName, setting, cliPass, true);
             cliPass.Subscribe(_flg => {
-                if ( _flg != "" ) {
+                if ( _flg ) {
                     retPass.OnNext(true);
                 } else {
                     retPass.OnNext(false);

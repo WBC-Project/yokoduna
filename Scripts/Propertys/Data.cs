@@ -30,35 +30,30 @@ namespace Yokoduna {
 	/// APISetData
 	/// </summary>
 	[System.Serializable] public class APISetData {
-		public string status{get; private set;}
-		public string timestamp{get; private set;}
-		public string error{get; private set;}
-		public APISetData(string status, string timestamp, string error) {
-			this.status = status;
-			this.timestamp = timestamp;
-			this.error = error;
-		}
+		public string status;
+		public string timestamp;
+		public string error;
 	}
 
 	/// <summary>
 	/// APIGetData
 	/// </summary>
 	[System.Serializable] public class APIGetData {
-		public string status {get; private set;}
-		public APIData data {get; private set;}
-		public string timestamp {get; private set;}
-		public string error {get; private set;}
+		public string status;
+		public APIData data;
+		public string timestamp;
+		public string error;
 	}
 
 	/// <summary>
 	/// Data Scheme
 	/// </summary>
 	[System.Serializable] public class APIData {
-		public string id {get; set;}
-		public string key {get; set;}
-		public string value {get; set;}
-		public string token {get; set;}
-		public string created_at {get; set;}
-		public string updated_at {get; set;}
+		public string id;
+		public string key;
+		public string value;
+		public string token;
+		public string created_at;
+		public string updated_at;
 	}
 }
